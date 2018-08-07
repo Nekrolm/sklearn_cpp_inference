@@ -13,8 +13,15 @@ class DenseLayer : public NNLayerBase
 public:    
     DenseLayer();
     ~DenseLayer() override {}
-
-    void init(const std::string& filename) override {}
+/*
+ Binary file format:
+  
+ int32 input_dim;
+ int32 output dim;
+ int32 activation_type;
+ double[input_dim][output_dim] weights;
+ double[output_dim] biases;
+*/
     int init(const char* raw_data, int raw_data_size) override;
 
     virtual void transform(const feature_t& feat, feature_t* output) override;

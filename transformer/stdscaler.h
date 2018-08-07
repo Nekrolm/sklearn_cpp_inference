@@ -9,8 +9,16 @@ class StdScaler : public Transformer
 public:
     StdScaler();
     virtual ~StdScaler() override {}
-
-    virtual void init(const std::string& filename) override;
+    
+    /*
+ Binary file format:
+  
+ int features_dim; 
+ double[features_dim] mean;
+ double[features_dim] variance;
+*/
+	virtual int init(const char* raw_data, int raw_data_size) override;
+    
     virtual void transform(const feature_t& features, feature_t* transformed_features) override;
     virtual feature_t transform(const feature_t& features) override;
 

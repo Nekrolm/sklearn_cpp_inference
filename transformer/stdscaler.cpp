@@ -1,6 +1,5 @@
 #include "stdscaler.h"
 
-#include <fstream>
 #include <assert.h>
 #include <cmath>
 
@@ -10,19 +9,27 @@ StdScaler::StdScaler()
 }
 
 
-void StdScaler::init(const std::string& filename)
+int StdStaler::init(const char* raw_data, int raw_data_size)
 {
+    int cnt = 0;
+    if (cnt + sizeof(int) > raw_data_size){
+        return 0;
+    }
+    int N = *reinterpret_cast<int*>(raw_data);
+    cnt += sizeof(int);
+    
+    if (2 * N * sizeof(double) + cnt > raw_data_size)
+        return 0;
+        
+    double* raw  = reinterpret_cast<double*>(raw_data + cnt);
 
-    std::ifstream input(filename, std::ios_base::in | std::ios_base::binary);
-    std::vector<char> data(std::istreambuf_iterator<char>(input), (std::istreambuf_iterator<char>()));
-
-    size_t N = data.size() / sizeof (double) / 2;
-
-    double* raw  = reinterpret_cast<double*>(data.data());
-
+    
     mean_ = feature_t(raw, raw + N);
     vars_ = feature_t(raw + N, raw + 2*N);
+    
+    return cnt + 2 * N * sizeof(double);
 }
+
 
 
 void StdScaler::transform(const feature_t& features, feature_t* transformed_features)

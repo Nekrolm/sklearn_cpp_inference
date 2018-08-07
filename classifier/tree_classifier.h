@@ -16,6 +16,18 @@ public:
 
     virtual void predict_proba (const features_t& features, proba_t* proba) override;
     virtual bool init (const std::string& file_name) override { return false; }
+    
+    
+/*
+ Binary file format:
+  
+ int N_nodes; int N_classes;
+ double[N_nodes] left_childrens;
+ double[N_nodes] right_childrens;
+ int[N_nodes] feature_in_node;
+ double[N_nodes] threshold_in_node;
+ double[N_nodes][N_classes] probabilities
+*/
     virtual int init (const char* raw_data, int raw_data_size) override;
 
 

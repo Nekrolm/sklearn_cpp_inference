@@ -16,6 +16,12 @@ public:
 
     virtual ~RandomForestClassifier() override {}
 
+/*
+ Binary file format:
+  
+ int N_estimators;
+ TreeClassifier[N] estimators;
+*/
     virtual int init(const char* raw_data, int raw_data_size) override;
 
     virtual bool init(const std::string& fname) override;

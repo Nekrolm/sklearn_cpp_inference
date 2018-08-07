@@ -14,6 +14,13 @@ public:
     ~NNClassifier() override {}
 
     virtual bool init(const std::string& filename) override;
+    
+/*
+ Binary file format:
+  
+ int N_layers;
+ NNLayers[N_layers] layers;
+*/
     virtual int init(const char* raw_data, int raw_data_size) override;
 
     virtual void predict_proba(const std::vector<features_t>& feat, std::vector<proba_t>* proba) override;
